@@ -4,7 +4,6 @@ import { ToDoForm } from "./ToDoForm";
 import { useState } from "react";
 import { v4 as uuid4 } from 'uuid';
 import { ToDo } from "./ToDo";
-uuid4();
 
 export const ToDoWrapper = () => {
     const [todos, setTodos] = useState([]);
@@ -28,21 +27,32 @@ export const ToDoWrapper = () => {
         const editTask = (task, id) => {
             setTodos(todos.map(todo => todo.id === id ? 
                 {...todo, task, isEditing: !todo.isEditing} : todo))
-            }
-            // console.log(`problem? ${editTodo}`)
+            };
+
     return (
         <div className="ToDoWrap">
+            
+            <h1>TaDo</h1>
+
             <ToDoForm addTodo={addTodo} />
-            {todos.map((todo, index) => (
-                todo.isEditing ? (
-                    <EditToDoForm editTodo={editTask} task={todo} key={todo.id} />
-                ) : (
-                <ToDo task={todo} key={todo.id}
-                toggleComplete={toggleComplete} 
-                deleteTodo={deleteTodo} 
-                editTodo={editTodo} />
-                )
-            ))}
+                {todos.map((todo, index) => (
+                    todo.isEditing ? (
+                    <EditToDoForm 
+                        editTodo={editTask} 
+                        task={todo} 
+                        key={todo.id} 
+                    />
+                    ) : (
+
+                        <ToDo 
+                            task={todo} 
+                            key={todo.id} 
+                            toggleComplete={toggleComplete}
+                            deleteTodo={deleteTodo} 
+                            editTodo={editTodo} 
+                        />
+                    )
+            ))};
             
         </div>
     )
