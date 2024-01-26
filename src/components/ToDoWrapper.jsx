@@ -1,4 +1,5 @@
 import React from "react";
+import { EditToDoForm} from "./EditToDoForm";
 import { ToDoForm } from "./ToDoForm";
 import { useState } from "react";
 import { v4 as uuid4 } from 'uuid';
@@ -11,7 +12,6 @@ export const ToDoWrapper = () => {
         const addTodo = (todo) => {
             setTodos([...todos, {id: uuid4(), task: todo,
             completed: false, isEditing: false}])
-            console.log(todos)
         }
 
         const toggleComplete = (id) => {
@@ -28,15 +28,16 @@ export const ToDoWrapper = () => {
         const editTask = (task, id) => {
             setTodos(todos.map(todo => todo.id === id ? 
                 {...todo, task, isEditing: !todo.isEditing} : todo))
-        }
+            }
+            // console.log(`problem? ${editTodo}`)
     return (
         <div className="ToDoWrap">
             <ToDoForm addTodo={addTodo} />
             {todos.map((todo, index) => (
                 todo.isEditing ? (
-                    <editToDoForm editTodo={editTask} task={todo} />
+                    <EditToDoForm editTodo={editTask} task={todo} key={todo.id} />
                 ) : (
-                <ToDo task={todo} key={index}
+                <ToDo task={todo} key={todo.id}
                 toggleComplete={toggleComplete} 
                 deleteTodo={deleteTodo} 
                 editTodo={editTodo} />
